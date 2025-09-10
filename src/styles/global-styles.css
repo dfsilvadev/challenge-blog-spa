@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: system-ui, 'Roboto', Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  font-variation-settings: 'wdth' 100;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  vertical-align: baseline;
+}
+
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  font-size: calc(0.520833vw);
+  scroll-behavior: smooth;
+  overflow: overlay;
+}
+
+html,
+body {
+  background: #f2f3f5;
+  color: #9b9b9b;
+  height: 100%;
+}
+
+[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 990px) {
+  html {
+    font-size: 62.5%;
+  }
+
+  .greaterThan {
+    display: none;
+  }
+
+  .lessThan {
+    display: inherit;
+  }
+}
