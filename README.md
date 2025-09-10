@@ -71,10 +71,21 @@ Configurado com tema personalizado e cores customizadas.
 
 ```
 src/
-├── App.tsx          # Componente principal
-├── main.tsx         # Ponto de entrada
-├── index.css        # Estilos globais com Tailwind
-└── vite-env.d.ts    # Tipos do Vite
+├── app/
+│   └── app.tsx          # Componente principal da aplicação
+├── hooks/               # Custom hooks personalizados
+├── main.tsx             # Ponto de entrada da aplicação
+├── presenters/          # Camada de apresentação
+│   ├── assets/          # Recursos estáticos (imagens, ícones, etc.)
+│   ├── components/      # Componentes reutilizáveis
+│   │   └── ui/          # Componentes de interface do usuário
+│   ├── containers/      # Containers/componentes de página
+│   ├── pages/           # Páginas da aplicação
+│   └── router/          # Configuração de rotas
+├── styles/
+│   └── global-styles.css # Estilos globais com Tailwind CSS
+├── utils/               # Funções utilitárias
+└── vite-env.d.ts        # Tipos do Vite
 ```
 
 ## 🎯 Próximos Passos
