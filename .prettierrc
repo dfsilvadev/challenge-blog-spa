@@ -7,5 +7,6 @@
   "useTabs": false,
   "bracketSpacing": true,
   "arrowParens": "avoid",
+  "htmlWhitespaceSensitivity": "css",
   "endOfLine": "lf"
 }

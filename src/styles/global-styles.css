@@ -30,7 +30,7 @@
 }
 
 html {
-  font-size: calc(0.520833vw);
+  font-size: clamp(12px, 0.520833vw, 24px);
   scroll-behavior: smooth;
   overflow: overlay;
 }
@@ -40,6 +40,27 @@ body {
   background: #f2f3f5;
   color: #9b9b9b;
   height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: #000000;
+}
+
+.btn-info {
+  background: none;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+}
+
+article {
+  background-color: #fff;
 }
 
 [disabled] {
