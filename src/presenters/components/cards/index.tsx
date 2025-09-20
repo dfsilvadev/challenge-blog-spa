@@ -42,7 +42,7 @@ const Card: React.FC<CardProps> = ({
       {isOpen && (
         <dialog
           open
-          className="absolute mt-[22px] ml-[67px] z-30 bg-white rounded-[1vw] border border-[#DFDFDF] "
+          className="absolute mt-[22px] ml-[67px] z-30 bg-white rounded-[0.5vw] border border-[#DFDFDF] "
         >
           <div className="min-w-[120px]">
             <ul className="divide-y-1 divide-[#DFDFDF] text-center">
