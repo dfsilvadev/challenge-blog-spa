@@ -30,7 +30,7 @@
 }
 
 html {
-  font-size: clamp(12px, 0.520833vw, 24px);
+  font-size: calc(0.520833vw);
   scroll-behavior: smooth;
   overflow: overlay;
 }
@@ -50,13 +50,6 @@ h5,
 h6,
 p {
   color: #000000;
-}
-
-.btn-info {
-  background: none;
-  color: #000000;
-  border: none;
-  cursor: pointer;
 }
 
 article {

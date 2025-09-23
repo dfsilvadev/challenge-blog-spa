@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Hero from '../../assets/Hero.png';
-import { DotsThreeVerticalIcon } from '@phosphor-icons/react';
+import { DotsThreeVertical } from 'phosphor-react';
 
 interface CardProps {
   title: string;
@@ -9,7 +9,7 @@ interface CardProps {
   createDate?: string;
 }
 
-const Card: React.FC<CardProps> = ({
+const CardGrid: React.FC<CardProps> = ({
   title,
   description,
   author,
@@ -23,11 +23,9 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <article
-      className="w-[200px] 
-      min-h-[200px] 
-      max-h-[300px] 
-      h-[calc(100vh-4rem)] 
-      rounded-[1vw] 
+      className=" w-[80vw] min-w-[100px] max-w-[200px]
+      h-[80vw] min-h-[200px] max-h-[300px]
+      rounded-[10px]
       border 
       border-[#DFDFDF] 
       flex 
@@ -35,14 +33,17 @@ const Card: React.FC<CardProps> = ({
       justify-between 
       relative"
     >
-      <button onClick={handleDialogOpen} className="ml-auto z-10 btn-info">
-        <DotsThreeVerticalIcon size={24} weight="bold" />
+      <button
+        onClick={handleDialogOpen}
+        className="ml-auto z-10 bg-inherit border-none cursor-pointer"
+      >
+        <DotsThreeVertical size={24} weight="bold" />
       </button>
 
       {isOpen && (
         <dialog
           open
-          className="absolute mt-[22px] ml-[67px] z-30 bg-white rounded-[0.5vw] border border-[#DFDFDF] "
+          className="absolute mt-[22px] ml-[67px] z-30 bg-white rounded-[5px] border border-[#DFDFDF] "
         >
           <div className="min-w-[120px]">
             <ul className="divide-y-1 divide-[#DFDFDF] text-center">
@@ -68,10 +69,10 @@ const Card: React.FC<CardProps> = ({
       <img
         src={Hero}
         alt={title}
-        className="w-full h-[40%] object-cover bg-center bg-no-repeat rounded-b-[1vw]"
+        className="w-full h-[40%] object-cover bg-center bg-no-repeat rounded-b-[10px]"
       />
     </article>
   );
 };
 
-export default Card;
+export default CardGrid;
