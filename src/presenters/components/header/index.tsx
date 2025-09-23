@@ -11,19 +11,19 @@ export default function Header() {
     }
   };
   return (
-    <header className="w-full px-[24px] py-[24px] text-white flex items-center justify-between fixed top-0">
-      <a href="#" className="text-[20px]">
+    <header className="w-full px-[24px] py-[24px] flex items-center justify-between fixed top-0">
+      <a href="#" className="text-[20px] text-white">
         Logo
       </a>
 
       <nav className="flex text-[15px] gap-[14px] items-center">
-        <a href="#" className="text-white no-underline hover:text-gray-300">
+        <a href="#" className=" no-underline hover:text-gray-300 text-white">
           Home
         </a>
 
         <button
           onClick={handleAutClick}
-          className="rounded-full px-[24px] py-[6px] border-none appearance-none bg-black text-white hover:bg-gray-800 transition-colors"
+          className="rounded-full px-[24px] py-[6px] text-white border-none appearance-none bg-black hover:bg-gray-800 transition-colors"
         >
           {isLoggedIn ? 'Sair' : 'Login'}
         </button>

@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 :root {
   font-family: system-ui, 'Roboto', Helvetica, Arial, sans-serif;
@@ -41,21 +39,6 @@ body {
   color: #9b9b9b;
   height: 100%;
 }
-
-/* Forçar especificidade para elementos que devem usar cores do Tailwind */
-.text-white {
-  color: #ffffff !important;
-}
-
-.bg-black {
-  background-color: #000000 !important;
-}
-
-/*a ancora default estava se sobresaindo acima do estilo aplicado direto no componente*/
-/* a {
-  color: #f2f3f5;
-  text-decoration-line: none;
-} */
 
 [disabled] {
   opacity: 0.6;
