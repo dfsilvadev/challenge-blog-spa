@@ -1,8 +1,13 @@
+import Header from '../presenters/components/header';
+
 function App() {
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-8">
-      <h1>Blog Challenge - SPA</h1>
-    </div>
+    <>
+      <Header />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-8">
+        <h1>Blog Challenge - SPA</h1>
+      </div>
+    </>
   );
 }
 
