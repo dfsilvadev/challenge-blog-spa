@@ -37,16 +37,25 @@ html {
 
 html,
 body {
-  background: #f2f3f5;
+  background: #000;
   color: #9b9b9b;
   height: 100%;
 }
 
+/* Forçar especificidade para elementos que devem usar cores do Tailwind */
+.text-white {
+  color: #ffffff !important;
+}
+
+.bg-black {
+  background-color: #000000 !important;
+}
+
 /*a ancora default estava se sobresaindo acima do estilo aplicado direto no componente*/
-a {
+/* a {
   color: #f2f3f5;
   text-decoration-line: none;
-}
+} */
 
 [disabled] {
   opacity: 0.6;

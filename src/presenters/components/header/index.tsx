@@ -17,13 +17,13 @@ export default function Header() {
       </a>
 
       <nav className="flex text-[15px] gap-[14px] items-center">
-        <a href="#">Home</a>
+        <a href="#" className="text-white no-underline hover:text-gray-300">
+          Home
+        </a>
 
-        {/* os atributos bg-black text-white não estão sendo aplicados */}
         <button
           onClick={handleAutClick}
-          className="rounded-full px-[24px] py-[6px] border-none appearance-none"
-          style={{ backgroundColor: 'black', color: 'white' }}
+          className="rounded-full px-[24px] py-[6px] border-none appearance-none bg-black text-white hover:bg-gray-800 transition-colors"
         >
           {isLoggedIn ? 'Sair' : 'Login'}
         </button>
