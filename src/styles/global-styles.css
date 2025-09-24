@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 :root {
   font-family: system-ui, 'Roboto', Helvetica, Arial, sans-serif;
@@ -40,20 +38,6 @@ body {
   background: #f2f3f5;
   color: #9b9b9b;
   height: 100%;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  color: #000000;
-}
-
-article {
-  background-color: #fff;
 }
 
 [disabled] {
