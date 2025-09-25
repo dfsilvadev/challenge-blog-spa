@@ -1,8 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Hero from '../../assets/Hero.png';
 import { DotsThreeVertical } from 'phosphor-react';
-import { FormatUpperAndCharacterLimiter } from '../utils/format';
-import { useClickOutside } from '../../../hooks/click/clickAway';
+import { useClickOutside } from '../../../hooks/useClickOutside';
 
 interface CardProps {
   title: string;
@@ -69,8 +68,8 @@ const PostCard: React.FC<CardProps> = ({
           )}
 
           <div className="flex items-center">
-            <span className="text-gray-900 font-bold text-xl mb-2 mr-3 line-clamp-2">
-              {FormatUpperAndCharacterLimiter(title)}
+            <span className="capitalize text-gray-900 font-bold text-xl mb-2 mr-3 line-clamp-2">
+              {title}
             </span>
             <button
               ref={buttonRef}
@@ -82,15 +81,15 @@ const PostCard: React.FC<CardProps> = ({
             </button>
           </div>
 
-          <p className="text-gray-700 text-base  line-clamp-5 mt-3">
-            {FormatUpperAndCharacterLimiter(description)}
+          <p className="capitalize text-gray-700 text-base  line-clamp-5 mt-3">
+            {description}
           </p>
         </div>
 
         <div className="flex justify-between">
           <data className="text-left italic text-gray-400">{createDate}</data>
-          <p className="text-right italic">
-            Criado por: {FormatUpperAndCharacterLimiter(author, 20)}
+          <p className="capitalize text-right italic truncate w-48">
+            Criado por: {author}
           </p>
         </div>
       </div>
