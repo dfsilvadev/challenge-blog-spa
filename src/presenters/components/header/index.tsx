@@ -5,9 +5,7 @@ export default function Header() {
   const [isLoggedIn, setIsLogged] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleAutClick = () => {
-    setIsLogged(!isLoggedIn);
-  };
+  const handleAutClick = () => setIsLogged(prevState => !prevState);
 
   return (
     <header className="w-full text-white px-8 py-6 flex items-center justify-between fixed top-0 z-50">
