@@ -28,7 +28,7 @@ const SignIn = () => {
               id="email"
               onChange={e => setEmail(e.target.value)}
               placeholder="seu@email.com"
-              className="w-full mt-1 px-4 py-2 rounded-lg bg-[#D9D9D9] outline-none"
+              className="w-full mt-1 px-4 py-2 rounded-lg bg-[#D9D9D9] outline-none text-black"
             />
           </div>
 
@@ -44,7 +44,7 @@ const SignIn = () => {
               id="password"
               onChange={e => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full mt-1 px-4 py-2 rounded-lg bg-[#D9D9D9] outline-none"
+              className="w-full mt-1 px-4 py-2 rounded-lg bg-[#D9D9D9] outline-none text-black"
             />
           </div>
 
