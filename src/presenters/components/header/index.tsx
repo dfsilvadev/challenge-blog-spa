@@ -31,7 +31,7 @@ export default function Header() {
 
       {/* Menu Mobile */}
       {menuOpen && (
-        <div className="absolute top-20 left-0 w-full flex flex-col items-center text-xl py-6 gap-6 md:hidden">
+        <div className="absolute top-20 left-0 w-full flex flex-col items-center text-xl py-6 gap-6 lg:hidden">
           <a href="#" onClick={() => setMenuOpen(false)}>
             Home
           </a>

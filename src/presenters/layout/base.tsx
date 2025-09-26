@@ -1,11 +1,10 @@
 import { Outlet } from 'react-router';
+import Header from '../components/header';
 
 const Base = () => {
   return (
     <div>
-      <header>
-        <h1>Base Layout</h1>
-      </header>
+      <Header />
 
       <main>
         <Outlet />
