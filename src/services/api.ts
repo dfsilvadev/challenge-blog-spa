@@ -34,10 +34,41 @@ ApiPrivate.interceptors.request.use(
   (error: AxiosError) => Promise.reject(error)
 );
 
+export function getErrorMessage(error: unknown): string {
+  if (axios.isAxiosError(error)) {
+    const data = error.response?.data as
+      | { error?: boolean; details?: string; message?: string }
+      | undefined;
+
+    if (data?.details) return data.details;
+    return error.message;
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return String(error);
+}
+
+async function handleRequest<T>(
+  promise: Promise<AxiosResponse<T>>
+): Promise<ApiResponse<T>> {
+  try {
+    const res = await promise;
+    return {
+      data: res.data,
+      status: res.status,
+      message: (res.data as unknown as { details?: string })?.details,
+    };
+  } catch (err) {
+    throw new Error(getErrorMessage(err));
+  }
+}
+
 export const get = async <T>(url: string, privateReq = false) => {
   const api = privateReq ? ApiPrivate : ApiPublic;
-  const res: AxiosResponse<T> = await api.get(url);
-  return { data: res.data, status: res.status } as ApiResponse<T>;
+  return handleRequest<T>(api.get(url));
 };
 
 export const post = async <T, B = unknown>(
@@ -46,8 +77,7 @@ export const post = async <T, B = unknown>(
   privateReq = false
 ) => {
   const api = privateReq ? ApiPrivate : ApiPublic;
-  const res: AxiosResponse<T> = await api.post(url, body);
-  return { data: res.data, status: res.status } as ApiResponse<T>;
+  return handleRequest<T>(api.post(url, body));
 };
 
 export const put = async <T, B = unknown>(
@@ -56,12 +86,10 @@ export const put = async <T, B = unknown>(
   privateReq = false
 ) => {
   const api = privateReq ? ApiPrivate : ApiPublic;
-  const res: AxiosResponse<T> = await api.put(url, body);
-  return { data: res.data, status: res.status } as ApiResponse<T>;
+  return handleRequest<T>(api.put(url, body));
 };
 
 export const del = async <T>(url: string, privateReq = false) => {
   const api = privateReq ? ApiPrivate : ApiPublic;
-  const res: AxiosResponse<T> = await api.delete(url);
-  return { data: res.data, status: res.status } as ApiResponse<T>;
+  return handleRequest<T>(api.delete(url));
 };

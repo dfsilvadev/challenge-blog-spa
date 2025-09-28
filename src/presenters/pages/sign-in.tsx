@@ -1,12 +1,20 @@
+import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+
 import Loading from '../components/loading';
-import { post } from '../../services/api';
-import type { LoginRequest, LoginResponse } from '../../services/authServices';
-import { useState } from 'react';
+import { useToast } from '../../hooks/useToast';
+
+import { login } from '../../services/authServices';
+import type { LoginRequest } from '../../services/authServices';
+
+import { useNavigate } from 'react-router';
+import { Routes } from '../router/constants/routesMap';
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
+  const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object({
     username: Yup.string().required('O nome de usuário é obrigatório'),
@@ -18,16 +26,12 @@ const SignIn = () => {
   const handleSubmit = async (values: LoginRequest) => {
     setLoading(true);
     try {
-      const response = await post<LoginResponse, LoginRequest>(
-        '/auth/login',
-        values,
-        false
-      );
-      console.log('Login successful:', response.data);
-
+      const response = await login(values);
       localStorage.setItem('token', response.data.details.token);
-    } catch (error) {
-      console.error('Login failed:', error);
+      showToast({ type: 'success', message: 'Login realizado com sucesso!' });
+      return navigate(Routes.POSTS);
+    } catch {
+      showToast({ type: 'error', message: 'Acesso negado!' });
     } finally {
       setLoading(false);
     }
