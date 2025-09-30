@@ -5,8 +5,9 @@ import * as Yup from 'yup';
 import Loading from '../components/loading';
 import { useToast } from '../../hooks/useToast';
 
-import { login } from '../../services/authServices';
+import { sendLogin } from '../../services/authServices';
 import type { LoginRequest } from '../../services/authServices';
+import { useAuth } from '../../hooks/useAuth';
 
 import { useNavigate } from 'react-router';
 import { Routes } from '../router/constants/routesMap';
@@ -15,6 +16,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const validationSchema = Yup.object({
     username: Yup.string().required('O nome de usuário é obrigatório'),
@@ -26,8 +28,8 @@ const SignIn = () => {
   const handleSubmit = async (values: LoginRequest) => {
     setLoading(true);
     try {
-      const response = await login(values);
-      localStorage.setItem('token', response.data.details.token);
+      const response = await sendLogin(values);
+      login(response.data.details.token);
       showToast({ type: 'success', message: 'Login realizado com sucesso!' });
       return navigate(Routes.POSTS);
     } catch {
