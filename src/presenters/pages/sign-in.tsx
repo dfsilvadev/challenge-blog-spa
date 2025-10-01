@@ -5,8 +5,8 @@ import * as Yup from 'yup';
 import Loading from '../components/loading';
 import { useToast } from '../../hooks/useToast';
 
-import { sendLogin } from '../../services/authServices';
-import type { LoginRequest } from '../../services/authServices';
+import { sendLogin } from '../../resources/authResources';
+import type { LoginRequest } from '../components/ui/auth';
 import { useAuth } from '../../hooks/useAuth';
 
 import { useNavigate } from 'react-router';
