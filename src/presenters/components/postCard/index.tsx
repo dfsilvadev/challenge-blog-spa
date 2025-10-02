@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Hero from '../../assets/Hero.png';
 import { DotsThreeVertical } from 'phosphor-react';
 import { useClickOutside } from '../../../hooks/useClickOutside';
 
 import { useNavigate } from 'react-router';
 import { Routes } from '../../router/constants/routesMap';
+
+import { useAuth } from '../../../hooks/useAuth';
 
 interface CardProps {
   postId: string;
@@ -30,30 +32,11 @@ const PostCard: React.FC<CardProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const formatted = new Date(createDate).toLocaleDateString('pt-BR');
   const navigate = useNavigate();
-
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    () => !!localStorage.getItem('token')
-  );
+  const { isLoggedIn } = useAuth();
 
   const handleDialogOpen = () => setIsOpen(prev => !prev);
 
   useClickOutside([dialogRef, buttonRef], () => setIsOpen(false));
-
-  useEffect(() => {
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key === 'token') setIsLoggedIn(!!e.newValue);
-    };
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const token = localStorage.getItem('token');
-      setIsLoggedIn(!!token);
-    }, 500);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div

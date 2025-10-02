@@ -9,7 +9,7 @@ const Base = () => {
       <div
         className="bg-local brightness-75 w-full h-[80px] md:h-[300px] bg-cover bg-no-repeat"
         style={{ backgroundImage: `url(${Hero})` }}
-      ></div>
+      />
       <main>
         <Outlet />
       </main>

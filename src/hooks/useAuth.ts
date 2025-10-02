@@ -19,14 +19,20 @@ export function useAuth(tokenKey = 'token') {
   }, [tokenKey]);
 
   useEffect(() => {
-    const handleStorage = (event: StorageEvent) => {
-      if (event.key === tokenKey) {
-        setIsLoggedIn(!!event.newValue);
-      }
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'token') setIsLoggedIn(!!e.newValue);
     };
     window.addEventListener('storage', handleStorage);
     return () => window.removeEventListener('storage', handleStorage);
-  }, [tokenKey]);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const token = localStorage.getItem('token');
+      setIsLoggedIn(!!token);
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
 
   return { isLoggedIn, login, logout };
 }
