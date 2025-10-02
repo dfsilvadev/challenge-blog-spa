@@ -3,25 +3,33 @@ import Hero from '../../assets/Hero.png';
 import { DotsThreeVertical } from 'phosphor-react';
 import { useClickOutside } from '../../../hooks/useClickOutside';
 
+import { useNavigate } from 'react-router';
+import { Routes } from '../../router/constants/routesMap';
+
 interface CardProps {
+  postId: string;
   title: string;
   description: string;
   author: string;
   createDate: string;
   isLandscape?: boolean;
+  onDelete: () => void;
 }
 
 const PostCard: React.FC<CardProps> = ({
+  postId,
   title,
   description,
   author,
   createDate,
   isLandscape,
+  onDelete,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const formatted = new Date(createDate).toLocaleDateString('pt-BR');
+  const navigate = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = useState(
     () => !!localStorage.getItem('token')
@@ -75,11 +83,23 @@ const PostCard: React.FC<CardProps> = ({
             >
               <div className="min-w-[80px]">
                 <ul className="divide-y divide-[#DFDFDF] text-center">
-                  <li className="cursor-pointer py-1 text-black hover:bg-gray-300 rounded-t-[5px]">
-                    Editar
+                  <li>
+                    <button
+                      onClick={() =>
+                        navigate(Routes.POST_DETAILS.replace(':id', postId))
+                      }
+                      className="cursor-pointer py-1 text-black hover:bg-gray-300 rounded-t-[5px] w-full"
+                    >
+                      Editar
+                    </button>
                   </li>
-                  <li className="cursor-pointer py-1 text-red-500 hover:bg-gray-300 rounded-b-[5px]">
-                    Deletar
+                  <li>
+                    <button
+                      onClick={onDelete}
+                      className="cursor-pointer py-1 text-red-500 hover:bg-gray-300 rounded-b-[5px]"
+                    >
+                      Deletar
+                    </button>
                   </li>
                 </ul>
               </div>

@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Funnel, SquaresFour, ListBullets } from 'phosphor-react';
 
-import { getall } from '../../resources/postResources';
+import { getall, remove } from '../../resources/postResources';
 
 import type { Detail } from '../components/ui/posts';
 import PostCard from '../components/postCard';
+
+import { useToast } from '../../hooks/useToast';
+import { getErrorMessage } from '../../axios/api';
 
 const Posts = () => {
   const [isLandscape, setIsLandscape] = useState(false);
   const [posts, setPosts] = useState<Detail[]>([]);
   const [loading, setLoading] = useState(false);
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -33,6 +37,16 @@ const Posts = () => {
 
     fetchPosts();
   }, []);
+
+  const removePost = (id: string) => {
+    try {
+      remove(id);
+      showToast({ type: 'success', message: 'Post removido com sucesso!' });
+      setPosts(prev => prev.filter(post => post.id !== id));
+    } catch (err) {
+      showToast({ type: 'error', message: getErrorMessage(err) });
+    }
+  };
 
   return (
     <div>
@@ -96,11 +110,13 @@ const Posts = () => {
           {posts.map(post => (
             <PostCard
               key={post.id}
+              postId={post.id}
               title={post.title}
               description={post.content}
               author={post.user_name}
               createDate={post.created_at}
               isLandscape={isLandscape}
+              onDelete={() => removePost(post.id)}
             />
           ))}
         </div>

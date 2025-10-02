@@ -37,10 +37,12 @@ ApiPrivate.interceptors.request.use(
 export function getErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
     const data = error.response?.data as
-      | { error?: boolean; details?: string; message?: string }
+      | { message?: string; details?: string; error?: boolean }
       | undefined;
 
     if (data?.details) return data.details;
+    if (data?.message) return data.message;
+
     return error.message;
   }
 
