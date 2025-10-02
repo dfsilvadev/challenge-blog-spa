@@ -7,7 +7,7 @@ interface CardProps {
   title: string;
   description: string;
   author: string;
-  createDate?: string;
+  createDate: string;
   isLandscape?: boolean;
 }
 
@@ -21,6 +21,7 @@ const PostCard: React.FC<CardProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const formatted = new Date(createDate).toLocaleDateString('pt-BR');
 
   const [isLoggedIn, setIsLoggedIn] = useState(
     () => !!localStorage.getItem('token')
@@ -49,20 +50,20 @@ const PostCard: React.FC<CardProps> = ({
   return (
     <div
       className={`flex ${
-        isLandscape ? 'flex-row min-w-sm w-3x1' : 'flex-col max-w-sm w-full '
+        isLandscape ? 'flex-row w-3x1 min-w-sm' : 'flex-col max-w-sm w-full '
       }`}
     >
       <div
         className={`h-48 ${
-          isLandscape ? 'h-auto w-1/3 rounded-l-lg' : 'rounded-t-lg'
+          isLandscape ? 'h-auto w-2/6 rounded-l-lg' : 'rounded-t-lg'
         } flex-none bg-cover bg-center text-center overflow-hidden`}
         style={{ backgroundImage: `url(${Hero})` }}
         title={title}
       ></div>
 
       <div
-        className={`h-[200px] border border-[#DFDFDF] bg-white p-4 flex flex-col justify-between leading-normal 
-        ${isLandscape ? 'rounded-r-lg h-[250px] ' : 'rounded-b-lg h-[150px] 2xl:h-[250px]'}`}
+        className={` border border-[#DFDFDF] bg-white p-4 flex flex-col justify-between leading-normal 
+        ${isLandscape ? 'rounded-r-lg h-[150px] md:h-[250px] w-full' : 'rounded-b-lg h-[200px] 2xl:h-[250px]'}`}
       >
         <div className="mb-8">
           {isOpen && (
@@ -103,15 +104,15 @@ const PostCard: React.FC<CardProps> = ({
             )}
           </div>
 
-          <p className="capitalize text-gray-700 text-base  line-clamp-6 pt-3">
+          <p className="capitalize text-gray-700 text-base line-clamp-4 md:line-clamp-6 pt-3">
             {description}
           </p>
         </div>
 
         <div className="flex justify-between">
-          <data className="text-left italic text-gray-400">{createDate}</data>
-          <p className="capitalize text-right italic truncate w-48">
-            Criado por: {author}
+          <data className="text-left italic text-gray-400">{formatted}</data>
+          <p className="capitalize text-right italic truncate w-40">
+            Aut.: {author}
           </p>
         </div>
       </div>
