@@ -96,7 +96,7 @@ const PostCard: React.FC<CardProps> = ({
                   <li>
                     <button
                       onClick={onDelete}
-                      className="cursor-pointer py-1 text-red-500 hover:bg-gray-300 rounded-b-[5px]"
+                      className="cursor-pointer py-1 text-red-500 hover:bg-gray-300 rounded-b-[5px] w-full"
                     >
                       Deletar
                     </button>

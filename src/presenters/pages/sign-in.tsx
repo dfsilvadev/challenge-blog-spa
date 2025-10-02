@@ -19,7 +19,9 @@ const SignIn = () => {
   const { login } = useAuth();
 
   const validationSchema = Yup.object({
-    username: Yup.string().required('O nome de usuário é obrigatório'),
+    username: Yup.string()
+      .required('O email de usuário é obrigatório')
+      .email('Digite um email válido'),
     password: Yup.string()
       .min(6, 'A senha deve ter no mínimo 6 caracteres')
       .required('A senha é obrigatória'),
@@ -56,10 +58,10 @@ const SignIn = () => {
                   htmlFor="username"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Informe seu nome de usuário
+                  Informe seu email de usuário
                 </label>
                 <Field
-                  type="text"
+                  type="email"
                   id="username"
                   name="username"
                   placeholder="seu nome de usuário"
