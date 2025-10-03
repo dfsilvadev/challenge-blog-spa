@@ -34,7 +34,6 @@ const PostCard: React.FC<CardProps> = ({
           : 'flex-col-reverse max-w-sm w-full'
       }`}
     >
-      {/* Imagem */}
       <div
         className={`h-48 ${
           isLandscape ? 'h-auto w-1/3 rounded-r-lg' : 'rounded-b-lg'
@@ -43,7 +42,6 @@ const PostCard: React.FC<CardProps> = ({
         title={title}
       ></div>
 
-      {/* Conteúdo */}
       <div
         className={`border border-[#DFDFDF] bg-white p-4 flex flex-col justify-between leading-normal
         ${isLandscape ? 'rounded-l-lg' : 'rounded-t-lg'}`}
@@ -76,7 +74,6 @@ const PostCard: React.FC<CardProps> = ({
               onClick={handleDialogOpen}
               className="text-black font-bold "
             >
-              {' '}
               <DotsThreeVertical className="w-10 h-10 -mt-10 -mr-3 cursor-pointer " />
             </button>
           </div>

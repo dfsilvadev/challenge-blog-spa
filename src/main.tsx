@@ -4,10 +4,14 @@ import { RouterProvider } from 'react-router';
 
 import router from './presenters/router/client';
 
+import { ToastProvider } from './presenters/context/ToastProvider';
+
 import './styles/global-styles.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ToastProvider>
+      <RouterProvider router={router} />
+    </ToastProvider>
   </StrictMode>
 );

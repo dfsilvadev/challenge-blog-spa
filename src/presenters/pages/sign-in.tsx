@@ -1,16 +1,41 @@
+import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+
 import Loading from '../components/loading';
+import { useToast } from '../../hooks/useToast';
+
+import { login } from '../../services/authServices';
+import type { LoginRequest } from '../../services/authServices';
+
+import { useNavigate } from 'react-router';
+import { Routes } from '../router/constants/routesMap';
 
 const SignIn = () => {
+  const [loading, setLoading] = useState(false);
+  const { showToast } = useToast();
+  const navigate = useNavigate();
+
   const validationSchema = Yup.object({
-    email: Yup.string()
-      .email('E-mail inválido')
-      .required('O e-mail é obrigatório'),
+    username: Yup.string().required('O nome de usuário é obrigatório'),
     password: Yup.string()
       .min(6, 'A senha deve ter no mínimo 6 caracteres')
       .required('A senha é obrigatória'),
   });
+
+  const handleSubmit = async (values: LoginRequest) => {
+    setLoading(true);
+    try {
+      const response = await login(values);
+      localStorage.setItem('token', response.data.details.token);
+      showToast({ type: 'success', message: 'Login realizado com sucesso!' });
+      return navigate(Routes.POSTS);
+    } catch {
+      showToast({ type: 'error', message: 'Acesso negado!' });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -18,31 +43,28 @@ const SignIn = () => {
         <h1 className="text-3xl font-bold text-center text-gray-800">Login</h1>
 
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ username: '', password: '' }}
           validationSchema={validationSchema}
-          onSubmit={values => {
-            console.log('Email:', values.email);
-            console.log('Senha:', values.password);
-          }}
+          onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
             <Form className="mt-6 space-y-5">
               <div>
                 <label
-                  htmlFor="email"
+                  htmlFor="username"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Informe seu endereço de e-mail
+                  Informe seu nome de usuário
                 </label>
                 <Field
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="seu@email.com"
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="seu nome de usuário"
                   className="w-full mt-1 px-4 py-2 rounded-lg bg-gray-200 outline-none text-black"
                 />
                 <ErrorMessage
-                  name="email"
+                  name="username"
                   component="p"
                   className="mt-1 text-sm text-red-500"
                 />
@@ -71,15 +93,15 @@ const SignIn = () => {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full py-2 mt-4 font-semibold text-white bg-black rounded-lg hover:bg-gray-500 transition disabled:opacity-50"
+                disabled={loading || isSubmitting}
+                className="w-full py-2 mt-4 font-semibold text-white bg-black rounded-lg hover:bg-gray-500 transition disabled:opacity-50 flex justify-center items-center"
               >
-                {isSubmitting ? (
-                  <span>
+                {loading ? (
+                  <>
                     Entrando... <Loading />
-                  </span>
+                  </>
                 ) : (
-                  <p>Entrar</p>
+                  <span>Entrar</span>
                 )}
               </button>
             </Form>
