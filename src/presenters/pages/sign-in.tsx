@@ -31,7 +31,7 @@ const SignIn = () => {
     setLoading(true);
     try {
       const response = await sendLogin(values);
-      login(response.data.details.token);
+      login(response.data);
       showToast({ type: 'success', message: 'Login realizado com sucesso!' });
       return navigate(Routes.POSTS);
     } catch {
@@ -62,9 +62,8 @@ const SignIn = () => {
                 </label>
                 <Field
                   type="email"
-                  id="username"
                   name="username"
-                  placeholder="seu nome de usuário"
+                  placeholder="seu email de usuário"
                   className="w-full mt-1 px-4 py-2 rounded-lg bg-gray-200 outline-none text-black"
                 />
                 <ErrorMessage
@@ -83,7 +82,6 @@ const SignIn = () => {
                 </label>
                 <Field
                   type="password"
-                  id="password"
                   name="password"
                   placeholder="••••••••"
                   className="w-full mt-1 px-4 py-2 rounded-lg bg-gray-200 outline-none text-black"

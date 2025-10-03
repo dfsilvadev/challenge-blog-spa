@@ -7,5 +7,8 @@ export interface LoginResponse {
   status: string;
   details: {
     token: string;
+    id: string;
+    email: string;
+    name: string;
   };
 }

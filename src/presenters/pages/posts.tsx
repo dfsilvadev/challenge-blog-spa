@@ -8,12 +8,18 @@ import PostCard from '../components/postCard';
 
 import { useToast } from '../../hooks/useToast';
 import { getErrorMessage } from '../../axios/api';
+import { useAuth } from '../../hooks/useAuth';
+
+import { useNavigate } from 'react-router';
+import { Routes } from '../router/constants/routesMap';
 
 const Posts = () => {
   const [isLandscape, setIsLandscape] = useState(false);
   const [posts, setPosts] = useState<Detail[]>([]);
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -22,8 +28,12 @@ const Posts = () => {
         const res = await getall();
         const details = res.data.details;
 
-        if (typeof details !== 'string') {
-          setPosts(details);
+        if (Array.isArray(details)) {
+          const filtered = user
+            ? details.filter((post: Detail) => post.user_id === user.id)
+            : details;
+
+          setPosts(filtered);
         } else {
           setPosts([]);
         }
@@ -36,11 +46,11 @@ const Posts = () => {
     };
 
     fetchPosts();
-  }, []);
+  }, [user]);
 
-  const removePost = (id: string) => {
+  const removePost = async (id: string) => {
     try {
-      remove(id);
+      await remove(id);
       showToast({ type: 'success', message: 'Post removido com sucesso!' });
       setPosts(prev => prev.filter(post => post.id !== id));
     } catch (err) {
@@ -51,7 +61,9 @@ const Posts = () => {
   return (
     <div>
       <div className="p-12">
-        <h1 className="font-bold text-5xl text-black">All Posts</h1>
+        <h1 className="font-bold text-5xl text-black">
+          {user ? 'Meus Posts' : 'Todos os Posts'}
+        </h1>
 
         {/* Filters */}
         <div className="mt-4 md:mt-10 flex flex-wrap justify-between items-center gap-4">
@@ -78,6 +90,7 @@ const Posts = () => {
                 rounded-[10px]
                 sm:p-4 lg:p-2
                 hover:bg-gray-500"
+              onClick={() => navigate(Routes.DASHBOARD)}
             >
               <span className="text-2xl md:text-3xl lg:text-5xl 2xl:text-4xl">
                 Criar novo post
@@ -99,7 +112,7 @@ const Posts = () => {
         {loading && <p>Carregando...</p>}
         {!loading && posts.length === 0 && <p>Nenhum post encontrado.</p>}
 
-        {/* Cards All Posts */}
+        {/* Cards */}
         <div
           className={`mt-12 gap-4 ${
             isLandscape
