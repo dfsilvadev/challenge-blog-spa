@@ -83,19 +83,21 @@ const Posts = () => {
 
           {/* Right */}
           <div className="flex items-center gap-4 sm:justify-center md:justify-end">
-            <button
-              className="bg-black text-white
+            {user && (
+              <button
+                className="bg-black text-white
                 h-[40px] lg:h-[50px]
                 w-[150px] md:w-[200px] lg:w-[300px]
                 rounded-[10px]
                 sm:p-4 lg:p-2
                 hover:bg-gray-500"
-              onClick={() => navigate(Routes.DASHBOARD)}
-            >
-              <span className="text-2xl md:text-3xl lg:text-5xl 2xl:text-4xl">
-                Criar novo post
-              </span>
-            </button>
+                onClick={() => navigate(Routes.DASHBOARD)}
+              >
+                <span className="text-2xl md:text-3xl lg:text-5xl 2xl:text-4xl">
+                  Criar novo post
+                </span>
+              </button>
+            )}
             <SquaresFour
               onClick={() => setIsLandscape(false)}
               size={40}
