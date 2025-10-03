@@ -12,5 +12,5 @@ export interface LoginResponse {
   };
 }
 
-export const login = (payload: LoginRequest) =>
+export const sendLogin = (payload: LoginRequest) =>
   post<LoginResponse, LoginRequest>('/auth/login', payload, false);
