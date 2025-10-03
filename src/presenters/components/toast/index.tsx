@@ -68,7 +68,7 @@ const renderMessage = (type: ToastType | undefined) => {
 export const ToastAll: React.FC<ToastProps> = ({ type = 'info', message }) => (
   <div className="space-y-3">
     <div
-      className="max-w-xs bg-white border border-gray-200 rounded-xl shadow-lg"
+      className="max-w-xl bg-white border border-gray-200 rounded-xl shadow-lg"
       role="alert"
       tabIndex={-1}
       aria-labelledby="hs-toast-warning-example-label"
