@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Hero from '../../assets/Hero.png';
 import { DotsThreeVertical } from 'phosphor-react';
 import { useClickOutside } from '../../../hooks/useClickOutside';
@@ -22,37 +22,55 @@ const PostCard: React.FC<CardProps> = ({
   const dialogRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    () => !!localStorage.getItem('token')
+  );
+
   const handleDialogOpen = () => setIsOpen(prev => !prev);
 
   useClickOutside([dialogRef, buttonRef], () => setIsOpen(false));
 
+  useEffect(() => {
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'token') setIsLoggedIn(!!e.newValue);
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const token = localStorage.getItem('token');
+      setIsLoggedIn(!!token);
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div
       className={`flex ${
-        isLandscape
-          ? 'flex-row-reverse min-w-sm max-w-5xl w-3x1'
-          : 'flex-col-reverse max-w-sm w-full'
+        isLandscape ? 'flex-row min-w-sm w-3x1' : 'flex-col max-w-sm w-full '
       }`}
     >
-      {/* Imagem */}
       <div
         className={`h-48 ${
-          isLandscape ? 'h-auto w-1/3 rounded-r-lg' : 'rounded-b-lg'
+          isLandscape ? 'h-auto w-1/3 rounded-l-lg' : 'rounded-t-lg'
         } flex-none bg-cover bg-center text-center overflow-hidden`}
         style={{ backgroundImage: `url(${Hero})` }}
         title={title}
       ></div>
 
-      {/* Conteúdo */}
       <div
-        className={`border border-[#DFDFDF] bg-white p-4 flex flex-col justify-between leading-normal
-        ${isLandscape ? 'rounded-l-lg' : 'rounded-t-lg'}`}
+        className={`h-[200px] border border-[#DFDFDF] bg-white p-4 flex flex-col justify-between leading-normal 
+        ${isLandscape ? 'rounded-r-lg h-[250px] ' : 'rounded-b-lg h-[150px] 2xl:h-[250px]'}`}
       >
         <div className="mb-8">
           {isOpen && (
             <div
               ref={dialogRef}
-              className={`absolute ${isLandscape ? 'mt-8 ml-140' : 'mt-8 ml-45'} bg-white rounded-[5px] border border-[#DFDFDF] shadow-md`}
+              className={`absolute mt-8
+                ${isLandscape ? 'ml-45 md:ml-120 lg:ml-415 xl:ml-450' : 'ml-25 md:ml-45 lg:ml-55'}
+               bg-white rounded-[5px] border border-[#DFDFDF] shadow-md`}
             >
               <div className="min-w-[80px]">
                 <ul className="divide-y divide-[#DFDFDF] text-center">
@@ -67,21 +85,25 @@ const PostCard: React.FC<CardProps> = ({
             </div>
           )}
 
-          <div className="flex items-center">
-            <span className="capitalize text-gray-900 font-bold text-xl mb-2 mr-3 line-clamp-2">
+          <div className="flex items-end">
+            <span
+              className="flex-1 capitalize text-gray-900 font-bold text-xl mb-2 line-clamp-2"
+              title={title} // mostra o título completo ao passar o mouse
+            >
               {title}
             </span>
-            <button
-              ref={buttonRef}
-              onClick={handleDialogOpen}
-              className="text-black font-bold "
-            >
-              {' '}
-              <DotsThreeVertical className="w-10 h-10 -mt-10 -mr-3 cursor-pointer " />
-            </button>
+            {isLoggedIn && (
+              <button
+                ref={buttonRef}
+                onClick={handleDialogOpen}
+                className="flex-shrink-0 text-black font-bold ml-2"
+              >
+                <DotsThreeVertical className="w-10 h-10 cursor-pointer" />
+              </button>
+            )}
           </div>
 
-          <p className="capitalize text-gray-700 text-base  line-clamp-5 mt-3">
+          <p className="capitalize text-gray-700 text-base  line-clamp-6 pt-3">
             {description}
           </p>
         </div>
