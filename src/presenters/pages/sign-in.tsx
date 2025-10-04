@@ -5,8 +5,8 @@ import * as Yup from 'yup';
 import Loading from '../components/loading';
 import { useToast } from '../../hooks/useToast';
 
-import { sendLogin } from '../../services/authServices';
-import type { LoginRequest } from '../../services/authServices';
+import { sendLogin } from '../../resources/authResources';
+import type { LoginRequest } from '../components/ui/auth';
 import { useAuth } from '../../hooks/useAuth';
 
 import { useNavigate } from 'react-router';
@@ -19,7 +19,9 @@ const SignIn = () => {
   const { login } = useAuth();
 
   const validationSchema = Yup.object({
-    username: Yup.string().required('O nome de usuário é obrigatório'),
+    username: Yup.string()
+      .required('O email de usuário é obrigatório')
+      .email('Digite um email válido'),
     password: Yup.string()
       .min(6, 'A senha deve ter no mínimo 6 caracteres')
       .required('A senha é obrigatória'),
@@ -29,7 +31,7 @@ const SignIn = () => {
     setLoading(true);
     try {
       const response = await sendLogin(values);
-      login(response.data.details.token);
+      login(response.data);
       showToast({ type: 'success', message: 'Login realizado com sucesso!' });
       return navigate(Routes.POSTS);
     } catch {
@@ -56,13 +58,12 @@ const SignIn = () => {
                   htmlFor="username"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Informe seu nome de usuário
+                  Informe seu email de usuário
                 </label>
                 <Field
-                  type="text"
-                  id="username"
+                  type="email"
                   name="username"
-                  placeholder="seu nome de usuário"
+                  placeholder="seu email de usuário"
                   className="w-full mt-1 px-4 py-2 rounded-lg bg-gray-200 outline-none text-black"
                 />
                 <ErrorMessage
@@ -81,7 +82,6 @@ const SignIn = () => {
                 </label>
                 <Field
                   type="password"
-                  id="password"
                   name="password"
                   placeholder="••••••••"
                   className="w-full mt-1 px-4 py-2 rounded-lg bg-gray-200 outline-none text-black"
