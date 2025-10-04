@@ -9,7 +9,8 @@ const base = '/post';
 
 export const getall = () => get<PostResponse>(base, true);
 
-export const getPostById = (id: number) => get<PostResponse>(base + id, false);
+export const getPostById = (id: string) =>
+  get<PostResponse>(base + `/${id}`, false);
 
 export const getPostByUser = (userId: string) =>
   get<PostResponse>(base + `/createdBy/${userId}`, true);
