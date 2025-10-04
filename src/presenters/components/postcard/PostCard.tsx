@@ -75,7 +75,7 @@ const PostCard: React.FC<CardProps> = ({
         flex flex-col justify-between relative
         ${
           isLandscape
-            ? 'w-[90vw] h-[200px] mx-auto'
+            ? 'w-[80vw] h-[200px] mx-auto'
             : 'w-[42vw] md:w-[22vw] xl:w-[15vw] h-[200px] xl:h-[300px]'
         }`}
       >
