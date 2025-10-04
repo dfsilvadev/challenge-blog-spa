@@ -16,7 +16,7 @@ const validationSchema = Yup.object({
   studentName: Yup.string().required('Por favor, informe seu nome'),
   content: Yup.string()
     .max(50, 'Seu comentário deve ter no máximo 50 caracteres')
-    .required(),
+    .required('Por favor, informe seu comentário'),
 });
 
 const CommentForm: React.FC<CommentPostProps> = ({ id }) => {
@@ -39,8 +39,12 @@ const CommentForm: React.FC<CommentPostProps> = ({ id }) => {
   };
 
   return (
-    <div>
-      <h5>Comentários</h5>
+    <div className="ml-2 mr-2 sm:ml-10 sm:mr-10 md:ml-10 md:mr-10 lg:ml-10 lg:mr-10 xl:ml-10 xl:mr-10">
+      <div>
+        <p className="mt-5 mb-2 text-5xl font-bold tracking-tight text-black">
+          Comentários
+        </p>
+      </div>
       <div>
         <Formik
           initialValues={{ postId: id, studentName: '', content: '' }}
@@ -59,12 +63,13 @@ const CommentForm: React.FC<CommentPostProps> = ({ id }) => {
                 <Field
                   id="studentName"
                   name="studentName"
-                  className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Insira aqui seu nome..."
+                  className="block w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 text-2xl focus:ring-blue-500 focus:border-blue-500"
                 ></Field>
                 <ErrorMessage
                   name="studentName"
                   component="p"
-                  className="mt-2 text-sm text-red-600"
+                  className="mt-2 text-xl text-red-600"
                 ></ErrorMessage>
               </div>
               <div>
@@ -78,18 +83,19 @@ const CommentForm: React.FC<CommentPostProps> = ({ id }) => {
                   id="content"
                   name="content"
                   as="textarea"
-                  className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Insira aqui seu comentário..."
+                  className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-2xl focus:ring-blue-500 focus:border-blue-500"
                 ></Field>
                 <ErrorMessage
                   name="content"
                   component="p"
-                  className="mt-2 text-sm text-red-600"
+                  className="mt-2 text-xl text-red-600"
                 ></ErrorMessage>
               </div>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2"
+                className="absolute right-10 text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 position-right"
               >
                 {isSubmitting ? 'Enviando...' : 'Enviar comentário'}
               </button>
