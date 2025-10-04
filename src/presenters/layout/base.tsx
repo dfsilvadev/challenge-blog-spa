@@ -6,13 +6,17 @@ const Base = () => {
   return (
     <div>
       <Header />
+
       <div
-        className="bg-local brightness-75 w-full h-[80px] md:h-[300px] bg-cover bg-no-repeat"
+        className="w-full h-[180px] bg-cover bg-no-repeat relative"
         style={{ backgroundImage: `url(${Hero})` }}
       />
-      <main>
-        <Outlet />
-      </main>
+
+      <div className="bg-[#f2f3f5] rounded-t-[20px] -mt-[20px] relative z-10">
+        <main className="p-4">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };

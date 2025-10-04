@@ -24,7 +24,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
     <ToastContext.Provider value={contextValue}>
       {children}
       {toast && (
-        <div className="fixed top-25 right-8 z-50">
+        <div className="fixed top-30 right-8 z-50">
           <ToastAll type={toast.type} message={toast.message} />
         </div>
       )}
