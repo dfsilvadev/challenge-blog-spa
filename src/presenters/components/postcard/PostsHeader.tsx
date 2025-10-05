@@ -3,6 +3,7 @@ import { Funnel, SquaresFour, ListBullets } from 'phosphor-react';
 import { useClickOutside } from '../../../hooks/useClickOutside';
 import { getColorFromCategory } from '../../../utils/colorCategory';
 import { subjects } from '../ui/subjects';
+import { useTranslation } from 'react-i18next';
 
 interface PostsHeaderProps {
   search: string;
@@ -32,12 +33,14 @@ export const PostsHeader = ({
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const filterRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
+
   useClickOutside(filterRef, () => setFilterOpen(false));
 
   useEffect(() => {
     const handler = setTimeout(() => onSearch(), 1000);
     return () => clearTimeout(handler);
-  }, [search]);
+  }, [search, onSearch]);
 
   const handleCategoryClick = (category: string) => {
     if (selectedCategory === category) {
@@ -49,7 +52,6 @@ export const PostsHeader = ({
     }
     setFilterOpen(false);
   };
-
   return (
     <div className="mt-4 md:mt-10 flex flex-wrap justify-between items-center gap-4">
       {/* Lado esquerdo: input + filtro */}
@@ -94,11 +96,11 @@ export const PostsHeader = ({
           {filterOpen && (
             <div
               className={`
-      absolute mt-2 w-60 bg-white border border-[#DFDFDF] shadow-lg rounded-[10px] p-3 z-100
-      right-0
-      md:right-auto md:left-auto md:translate-x-0
-      sm:left-1/2 sm:-translate-x-1/2
-    `}
+              absolute mt-2 w-60 bg-white border border-[#DFDFDF] shadow-lg rounded-[10px] p-3 z-100
+              right-0
+              md:right-auto md:left-auto md:translate-x-0
+              sm:left-1/2 sm:-translate-x-1/2
+            `}
             >
               <p className="text-black text-xl text-center">Categorias</p>
               <ul className="flex flex-col gap-2 mt-2">
@@ -107,13 +109,13 @@ export const PostsHeader = ({
                     <button
                       type="button"
                       onClick={() => handleCategoryClick(subject.name)}
-                      className={`w-full px-3 py-2 rounded-full text-white ${getColorFromCategory(subject.name)} ${
+                      className={`capitalize w-full px-3 py-2 rounded-[10px] text-white ${getColorFromCategory(subject.name)} ${
                         selectedCategory === subject.name
                           ? 'ring-2 ring-red-600'
                           : ''
                       } hover:opacity-90`}
                     >
-                      {subject.name}
+                      {t(`subjects.${subject.name}`, subject.name)}
                     </button>
                   </li>
                 ))}
@@ -125,7 +127,7 @@ export const PostsHeader = ({
                 <button
                   type="button"
                   onClick={() => setOrderBy('DESC')}
-                  className={`px-3 py-1 rounded-md border ${
+                  className={`px-3 py-1 rounded-md border border-[#DFDFDF] ${
                     orderBy === 'DESC'
                       ? 'bg-red-600 text-white'
                       : 'bg-white hover:bg-gray-100'

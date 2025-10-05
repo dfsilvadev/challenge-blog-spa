@@ -1,4 +1,4 @@
-import PostCard from './Postcard';
+import PostCard from '../postcard/PostCard';
 import { getColorFromCategory } from '../../../utils/colorCategory';
 import type { Detail } from '../../components/ui/posts';
 
