@@ -20,8 +20,6 @@ export default function PostPage() {
   const { id: urlId } = useParams<PostParams>();
   const { user } = useAuth();
 
-  console.log(user);
-
   const id = urlId;
 
   useEffect(() => {
@@ -146,7 +144,7 @@ export default function PostPage() {
         <div>
           <CommentForm id={String(id)}></CommentForm>
         </div>
-        <div className="ml-2 mr-2 sm:ml-10 sm:mr-10 md:ml-10 md:mr-10 lg:ml-10 lg:mr-10 xl:ml-10 xl:mr-10">
+        <div>
           {/*Grid de comentários*/}
           <div className="grid place-items-center sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-20">
             {comments.map((comment, index) => (

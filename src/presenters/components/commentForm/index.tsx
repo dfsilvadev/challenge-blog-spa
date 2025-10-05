@@ -16,7 +16,7 @@ interface CommentPostProps {
 const validationSchema = Yup.object({
   autor_nome: Yup.string().required('Por favor, informe seu nome'),
   conteudo: Yup.string()
-    .max(50, 'Seu comentário deve ter no máximo 50 caracteres')
+    .max(500, 'Seu comentário deve ter no máximo 500 caracteres')
     .required('Por favor, informe seu comentário'),
 });
 
@@ -31,6 +31,7 @@ const CommentForm: React.FC<CommentPostProps> = ({ id }) => {
       await create(values);
       showToast({ type: 'success', message: 'Comentário criado com sucesso!' });
       resetForm();
+      window.location.reload();
     } catch {
       showToast({
         type: 'error',
@@ -40,7 +41,7 @@ const CommentForm: React.FC<CommentPostProps> = ({ id }) => {
   };
 
   return (
-    <div className="ml-2 mr-2 sm:ml-10 sm:mr-10 md:ml-10 md:mr-10 lg:ml-10 lg:mr-10 xl:ml-10 xl:mr-10">
+    <div className="">
       <div>
         <p className="mt-5 mb-2 text-5xl font-bold tracking-tight text-black">
           Comentários
