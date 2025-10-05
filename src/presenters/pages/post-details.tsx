@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { getPostById } from '../../resources/postResources';
 import type { Detail } from '../components/ui/posts';
+import type { CommentDetail } from '../components/ui/comments';
 import { useAuth } from '../../hooks/useAuth';
+import CommentForm from '../components/commentForm';
+import CommentCard from '../components/commentCard';
+import { getPostCommentsByPostId } from '../../resources/commentResources';
 
 type PostParams = {
   id: string;
@@ -10,6 +14,7 @@ type PostParams = {
 
 export default function PostPage() {
   const [posts, setPosts] = useState<Detail[]>([]);
+  const [comments, setComments] = useState<CommentDetail[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { id: urlId } = useParams<PostParams>();
@@ -23,6 +28,7 @@ export default function PostPage() {
     if (!id) {
       setLoading(false);
       setPosts([]);
+      setComments([]);
       return;
     }
 
@@ -69,7 +75,24 @@ export default function PostPage() {
       }
     };
 
+    const fetchComment = async () => {
+      try {
+        const response = await getPostCommentsByPostId(id);
+        const details = response.data.details;
+
+        if (Array.isArray(details) && details.length > 0) {
+          setComments(details);
+        } else {
+          setComments([]);
+        }
+      } catch (err) {
+        console.error(err);
+        setComments([]);
+      }
+    };
+
     fetchPost();
+    fetchComment();
   }, [id, user]);
 
   if (loading) return <p className="text-center mt-10">Carregando...</p>;
@@ -120,6 +143,17 @@ export default function PostPage() {
             </p>
           </>
         )}
+        <div>
+          <CommentForm id={String(id)}></CommentForm>
+        </div>
+        <div className="ml-2 mr-2 sm:ml-10 sm:mr-10 md:ml-10 md:mr-10 lg:ml-10 lg:mr-10 xl:ml-10 xl:mr-10">
+          {/*Grid de comentários*/}
+          <div className="grid place-items-center sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-20">
+            {comments.map((comment, index) => (
+              <CommentCard key={index} comment={comment} />
+            ))}
+          </div>
+        </div>
       </main>
     </div>
   );
