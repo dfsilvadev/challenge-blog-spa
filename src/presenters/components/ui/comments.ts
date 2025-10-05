@@ -5,15 +5,15 @@ export interface CommentResponse {
 
 export interface CommentDetail {
   id: string;
-  conteudo: string;
-  autor_nome: string;
+  content: string;
+  author: string;
   created_at: string;
   updated_at: string;
   post_id: string;
 }
 
 export interface CreateComment {
-  autor_nome: string;
-  conteudo: string;
+  author: string;
+  content: string;
   post_id: string;
 }

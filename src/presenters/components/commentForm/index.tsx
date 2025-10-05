@@ -14,8 +14,8 @@ interface CommentPostProps {
 
 //Validation schema com Yup
 const validationSchema = Yup.object({
-  autor_nome: Yup.string().required('Por favor, informe seu nome'),
-  conteudo: Yup.string()
+  author: Yup.string().required('Por favor, informe seu nome'),
+  content: Yup.string()
     .max(500, 'Seu comentário deve ter no máximo 500 caracteres')
     .required('Por favor, informe seu comentário'),
 });
@@ -49,7 +49,7 @@ const CommentForm: React.FC<CommentPostProps> = ({ id }) => {
       </div>
       <div>
         <Formik
-          initialValues={{ post_id: id, autor_nome: '', conteudo: '' }}
+          initialValues={{ post_id: id, author: '', content: '' }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
@@ -57,39 +57,39 @@ const CommentForm: React.FC<CommentPostProps> = ({ id }) => {
             <Form className="mt-6 space-y-5">
               <div className="mb-12">
                 <label
-                  htmlFor="autor_nome"
+                  htmlFor="author"
                   className="mb-3 font-normal text-2xl text-black"
                 >
                   Informe seu nome
                 </label>
                 <Field
-                  id="autor_nome"
-                  name="autor_nome"
+                  id="author"
+                  name="author"
                   placeholder="Insira aqui seu nome..."
                   className="block w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 text-2xl focus:ring-blue-500 focus:border-blue-500"
                 ></Field>
                 <ErrorMessage
-                  name="autor_nome"
+                  name="author"
                   component="p"
                   className="mt-2 text-xl text-red-600"
                 ></ErrorMessage>
               </div>
               <div>
                 <label
-                  htmlFor="conteudo"
+                  htmlFor="content"
                   className="mb-3 font-normal text-2xl text-black"
                 >
                   Insira seu comentário
                 </label>
                 <Field
-                  id="conteudo"
-                  name="conteudo"
+                  id="content"
+                  name="content"
                   as="textarea"
                   placeholder="Insira aqui seu comentário..."
                   className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-2xl focus:ring-blue-500 focus:border-blue-500"
                 ></Field>
                 <ErrorMessage
-                  name="conteudo"
+                  name="content"
                   component="p"
                   className="mt-2 text-xl text-red-600"
                 ></ErrorMessage>

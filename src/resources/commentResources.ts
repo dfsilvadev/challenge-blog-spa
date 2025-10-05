@@ -7,11 +7,11 @@ import { get, post } from '../axios/api';
 const base = '/post';
 
 export const getPostCommentsByPostId = (id: string) =>
-  get<CommentResponse>(base + `/${id}/comentarios`, false);
+  get<CommentResponse>(base + `/${id}/comments`, false);
 
 export const create = (commentData: CreateComment) =>
   post<CommentResponse, CreateComment>(
-    base + `/${commentData.post_id}/comentarios`,
+    base + `/${commentData.post_id}/comments`,
     commentData,
     false
   );
