@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Routes } from '../../router/constants/routesMap';
 import { useAuth } from '../../../hooks/useAuth';
@@ -15,6 +15,20 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Muda a cor depois de 100px de scroll
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useClickOutside(dropdownRef, () => setDropdownOpen(false));
 
@@ -48,7 +62,11 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="w-full px-6 md:px-12 py-10 flex items-center justify-between fixed top-0 z-50">
+    <header
+      className={`w-full px-6 md:px-12 py-10 flex items-center justify-between fixed top-0 z-150
+      transition-colors duration-300 ease-in-out
+      ${scrolled ? 'bg-black rounded-b-3xl' : 'bg-transparent'}`}
+    >
       <button
         onClick={() => navigate(Routes.POSTS)}
         className="text-2xl md:text-3xl font-bold text-white"
