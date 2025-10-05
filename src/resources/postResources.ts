@@ -16,7 +16,7 @@ export const getPostByUser = (userId: string) =>
   get<PostResponse>(base + `/createdBy/${userId}`, true);
 
 export const getPostFilter = (
-  search: number,
+  search: string,
   orderBy: string = 'ASC',
   page: number = 1,
   limit: number = 10
