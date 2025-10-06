@@ -90,7 +90,7 @@ export const PostsHeader = ({
             className="p-2"
             aria-label="Filtrar matérias"
           >
-            <Funnel size={24} className="text-black" />
+            <Funnel size={24} className="text-black cursor-pointer" />
           </button>
 
           {filterOpen && (
@@ -109,7 +109,7 @@ export const PostsHeader = ({
                     <button
                       type="button"
                       onClick={() => handleCategoryClick(subject.name)}
-                      className={`capitalize w-full px-3 py-2 rounded-[10px] text-white ${getColorFromCategory(subject.name)} ${
+                      className={`cursor-pointer capitalize w-full px-3 py-2 rounded-[10px] text-white ${getColorFromCategory(subject.name)} ${
                         selectedCategory === subject.name
                           ? 'ring-2 ring-red-600'
                           : ''
@@ -127,7 +127,7 @@ export const PostsHeader = ({
                 <button
                   type="button"
                   onClick={() => setOrderBy('DESC')}
-                  className={`px-3 py-1 rounded-md border border-[#DFDFDF] ${
+                  className={`cursor-pointer px-3 py-1 rounded-md border border-[#DFDFDF] ${
                     orderBy === 'DESC'
                       ? 'bg-red-600 text-white'
                       : 'bg-white hover:bg-gray-100'
@@ -138,7 +138,7 @@ export const PostsHeader = ({
                 <button
                   type="button"
                   onClick={() => setOrderBy('ASC')}
-                  className={`px-3 py-1 rounded-md border ${
+                  className={`cursor-pointer px-3 py-1 rounded-md border ${
                     orderBy === 'ASC'
                       ? 'bg-red-600 text-white'
                       : 'bg-white hover:bg-gray-100'
@@ -156,7 +156,7 @@ export const PostsHeader = ({
       <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto mt-2 sm:mt-0 justify-center sm:justify-end">
         {isLoggedIn && (
           <button
-            className="bg-black text-white h-[40px] w-[150px] rounded-[10px] hover:bg-gray-500"
+            className="cursor-pointer bg-black text-white h-[40px] w-[150px] rounded-[10px] hover:bg-gray-500"
             onClick={onCreatePost}
           >
             <span className="text-xl">Criar post</span>
@@ -165,12 +165,12 @@ export const PostsHeader = ({
         <SquaresFour
           onClick={() => setIsLandscape(false)}
           size={40}
-          className={`${isLandscape ? 'text-black' : 'text-red-800'}`}
+          className={`cursor-pointer ${isLandscape ? 'text-black' : 'text-red-800'}`}
         />
         <ListBullets
           onClick={() => setIsLandscape(true)}
           size={40}
-          className={`${isLandscape ? 'text-red-800' : 'text-black'}`}
+          className={`cursor-pointer ${isLandscape ? 'text-red-800' : 'text-black'}`}
         />
       </div>
     </div>

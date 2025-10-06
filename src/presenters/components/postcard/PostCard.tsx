@@ -99,7 +99,7 @@ const PostCard: React.FC<CardProps> = ({
               e.stopPropagation();
               setIsDialogOpen(prev => !prev);
             }}
-            className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 z-50"
+            className="cursor-pointer absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 z-50"
             aria-label="Abrir menu de opções"
           >
             <DotsThreeVertical size={24} className="text-black" weight="bold" />

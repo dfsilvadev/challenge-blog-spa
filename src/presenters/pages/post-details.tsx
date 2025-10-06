@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { getPostById } from '../../resources/postResources';
 import type { Detail } from '../components/ui/posts';
 import type { CommentDetail } from '../components/ui/comments';
@@ -7,6 +7,7 @@ import { useAuth } from '../../hooks/useAuth';
 import CommentForm from '../components/commentForm';
 import CommentCard from '../components/commentCard';
 import { getPostCommentsByPostId } from '../../resources/commentResources';
+import { Routes } from '../router/constants/routesMap';
 
 type PostParams = {
   id: string;
@@ -19,6 +20,7 @@ export default function PostPage() {
   const [error, setError] = useState<string | null>(null);
   const { id: urlId } = useParams<PostParams>();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const id = urlId;
 
@@ -98,22 +100,24 @@ export default function PostPage() {
   return (
     <div className="min-h-screen">
       <main className="max-w-[80%] text-black mx-auto px-4 py-8">
-        <a href="/" className="text-blue-600 text-base">
+        <button
+          onClick={() => navigate(Routes.POSTS)}
+          className="cursor-pointer text-blue-600 text-base"
+        >
           Home
-        </a>
+        </button>
         <span>/Post</span>
 
         {error && (
           <div className="text-center mt-10 text-red-600 p-4 border border-red-300 rounded">
             <p className="font-bold text-lg">Post não Encontrado</p>
             <p className="text-sm mt-2 mb-4">{error}</p>
-
-            <a
-              href="/"
-              className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-150 no-underline inline-block mt-4"
+            <button
+              onClick={() => navigate(Routes.POSTS)}
+              className="cursor-pointer bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-150 no-underline inline-block mt-4"
             >
               Voltar para o Inicio
-            </a>
+            </button>
           </div>
         )}
         {!error && !posts && (
@@ -122,7 +126,7 @@ export default function PostPage() {
 
         {posts && (
           <>
-            <div className="flex justify-between items-center mt-6">
+            <div className="flex justify-between items-center mt-6 pt-6">
               <h1 className="text-4xl md:text-5xl font-bold capitalize">
                 {posts[0]?.title}
               </h1>
@@ -141,7 +145,7 @@ export default function PostPage() {
             </p>
           </>
         )}
-        <div>
+        <div className="pt-6 ">
           <CommentForm id={String(id)}></CommentForm>
         </div>
         <div>
