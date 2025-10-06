@@ -136,7 +136,7 @@ const PostCard: React.FC<CardProps> = ({
 
         {/* Conteúdo do card */}
         <div className="px-6 py-4 flex-1 flex flex-col">
-          <div className="font-bold text-2xl text-black mb-2 capitalize">
+          <div className="text-left font-bold text-2xl text-black mb-2 capitalize">
             {title}
           </div>
           <p className="text-gray-700 pt-3 text-base capitalize line-clamp-8 text-justify">
