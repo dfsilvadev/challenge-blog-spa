@@ -17,6 +17,12 @@ const Base = () => {
           <Outlet />
         </main>
       </div>
+
+      <div className="bg-black ] relative w-full h-25">
+        <span className="flex justify-center pt-7 text-white text-2xl ">
+          Todos direitos reservados | © 2025{' '}
+        </span>
+      </div>
     </div>
   );
 };
