@@ -69,7 +69,7 @@ const Header: React.FC = () => {
     >
       <button
         onClick={() => navigate(Routes.POSTS)}
-        className="text-2xl md:text-3xl font-bold text-white"
+        className="text-2xl md:text-3xl font-bold text-white cursor-pointer"
       >
         Blog Escolar
       </button>
@@ -77,7 +77,7 @@ const Header: React.FC = () => {
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className="flex items-center justify-center w-15 h-15 text-lg md:text-2xl rounded-full border border-black bg-white font-semibold text-black"
+          className="cursor-pointer flex items-center justify-center w-15 h-15 text-lg md:text-2xl rounded-full border border-black bg-white font-semibold text-black"
         >
           {initials}
         </button>
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
           <div className="absolute right-0 mt-2 w-32 bg-white text-black rounded-md shadow-lg py-1">
             <button
               onClick={handleAuthClick}
-              className="w-full text-left px-4 py-2 hover:bg-gray-100"
+              className="cursor-pointer w-full text-left px-4 py-2 hover:bg-gray-100 "
             >
               {isLoggedIn ? 'Logout' : 'Login'}
             </button>

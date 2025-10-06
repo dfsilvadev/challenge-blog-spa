@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { getPostById } from '../../resources/postResources';
 import type { Detail } from '../components/ui/posts';
+import type { CommentDetail } from '../components/ui/comments';
 import { useAuth } from '../../hooks/useAuth';
+import CommentForm from '../components/commentForm';
+import CommentCard from '../components/commentCard';
+import { getPostCommentsByPostId } from '../../resources/commentResources';
+import { Routes } from '../router/constants/routesMap';
 
 type PostParams = {
   id: string;
@@ -10,12 +15,12 @@ type PostParams = {
 
 export default function PostPage() {
   const [posts, setPosts] = useState<Detail[]>([]);
+  const [comments, setComments] = useState<CommentDetail[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { id: urlId } = useParams<PostParams>();
   const { user } = useAuth();
-
-  console.log(user);
+  const navigate = useNavigate();
 
   const id = urlId;
 
@@ -23,6 +28,7 @@ export default function PostPage() {
     if (!id) {
       setLoading(false);
       setPosts([]);
+      setComments([]);
       return;
     }
 
@@ -69,7 +75,24 @@ export default function PostPage() {
       }
     };
 
+    const fetchComment = async () => {
+      try {
+        const response = await getPostCommentsByPostId(id);
+        const details = response.data.details;
+
+        if (Array.isArray(details) && details.length > 0) {
+          setComments(details);
+        } else {
+          setComments([]);
+        }
+      } catch (err) {
+        console.error(err);
+        setComments([]);
+      }
+    };
+
     fetchPost();
+    fetchComment();
   }, [id, user]);
 
   if (loading) return <p className="text-center mt-10">Carregando...</p>;
@@ -77,22 +100,24 @@ export default function PostPage() {
   return (
     <div className="min-h-screen">
       <main className="max-w-[80%] text-black mx-auto px-4 py-8">
-        <a href="/" className="text-blue-600 text-base">
+        <button
+          onClick={() => navigate(Routes.POSTS)}
+          className="cursor-pointer text-blue-600 text-base"
+        >
           Home
-        </a>
+        </button>
         <span>/Post</span>
 
         {error && (
           <div className="text-center mt-10 text-red-600 p-4 border border-red-300 rounded">
             <p className="font-bold text-lg">Post não Encontrado</p>
             <p className="text-sm mt-2 mb-4">{error}</p>
-
-            <a
-              href="/"
-              className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-150 no-underline inline-block mt-4"
+            <button
+              onClick={() => navigate(Routes.POSTS)}
+              className="cursor-pointer bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-150 no-underline inline-block mt-4"
             >
               Voltar para o Inicio
-            </a>
+            </button>
           </div>
         )}
         {!error && !posts && (
@@ -101,7 +126,7 @@ export default function PostPage() {
 
         {posts && (
           <>
-            <div className="flex justify-between items-center mt-6">
+            <div className="flex justify-between items-center mt-6 pt-6">
               <h1 className="text-4xl md:text-5xl font-bold capitalize">
                 {posts[0]?.title}
               </h1>
@@ -120,6 +145,17 @@ export default function PostPage() {
             </p>
           </>
         )}
+        <div className="pt-6 ">
+          <CommentForm id={String(id)}></CommentForm>
+        </div>
+        <div>
+          {/*Grid de comentários*/}
+          <div className="grid place-items-center sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-20">
+            {comments.map((comment, index) => (
+              <CommentCard key={index} comment={comment} />
+            ))}
+          </div>
+        </div>
       </main>
     </div>
   );

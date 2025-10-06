@@ -57,6 +57,18 @@ const PostCard: React.FC<CardProps> = ({
     return `${Math.max(minPercent, Math.min(maxPercent, percent)) * 100}%`;
   };
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (
+      target.closest('button[aria-label="Abrir menu de opções"]') ||
+      target.closest('.menu-options')
+    ) {
+      return;
+    }
+
+    navigate(Routes.POST_DETAILS.replace(':id', postId));
+  };
+
   return (
     <div ref={cardRef} className="relative mx-auto mt-5">
       {/* Div de fundo menor (decorativa e responsiva) */}
@@ -69,9 +81,10 @@ const PostCard: React.FC<CardProps> = ({
         }}
       ></div>
 
-      {/* Div de conteúdo */}
-      <div
-        className={`bg-white rounded-lg border border-[#DFDFDF] overflow-hidden
+      {/* Card principal */}
+      <button
+        onClick={handleCardClick}
+        className={`bg-white rounded-lg border border-[#DFDFDF] overflow-hidden cursor-pointer transition-transform hover:scale-[1.01]
         flex flex-col justify-between relative
         ${
           isLandscape
@@ -82,8 +95,11 @@ const PostCard: React.FC<CardProps> = ({
         {/* Ícone de menu no canto superior direito */}
         {isLoggedIn && (
           <button
-            onClick={() => setIsDialogOpen(prev => !prev)}
-            className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 z-50"
+            onClick={e => {
+              e.stopPropagation();
+              setIsDialogOpen(prev => !prev);
+            }}
+            className="cursor-pointer absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 z-50"
             aria-label="Abrir menu de opções"
           >
             <DotsThreeVertical size={24} className="text-black" weight="bold" />
@@ -93,12 +109,13 @@ const PostCard: React.FC<CardProps> = ({
         {/* Dialog com opções */}
         {isDialogOpen && (
           <div
-            className="absolute rounded-[5px] border border-[#DFDFDF] divide-y divide-[#DFDFDF] top-[10px] bg-white shadow-md w-32 z-50 flex flex-col"
+            className="menu-options absolute rounded-[5px] border border-[#DFDFDF] divide-y divide-[#DFDFDF] top-[10px] bg-white shadow-md w-32 z-50 flex flex-col"
             style={{ right: 'calc(30px + 5px)' }}
+            onClick={e => e.stopPropagation()}
           >
             <button
               onClick={() => {
-                navigate(Routes.POST_DETAILS.replace(':id', postId));
+                navigate(Routes.DASHBOARD_EDIT_POST.replace(':id', postId));
                 setIsDialogOpen(false);
               }}
               className="px-4 py-2 text-center text-black hover:bg-gray-100"
@@ -119,7 +136,7 @@ const PostCard: React.FC<CardProps> = ({
 
         {/* Conteúdo do card */}
         <div className="px-6 py-4 flex-1 flex flex-col">
-          <div className="font-bold text-2xl text-black mb-2 capitalize">
+          <div className="text-left font-bold text-2xl text-black mb-2 capitalize">
             {title}
           </div>
           <p className="text-gray-700 pt-3 text-base capitalize line-clamp-8 text-justify">
@@ -127,14 +144,14 @@ const PostCard: React.FC<CardProps> = ({
           </p>
         </div>
 
-        {/* Footer do card */}
+        {/* Rodapé */}
         <div className="flex justify-between px-6 py-2 border-t border-[#DFDFDF]">
           <data className="text-left italic text-gray-400">{formatted}</data>
           <p className="capitalize text-right italic truncate w-40">
             Aut.: {author}
           </p>
         </div>
-      </div>
+      </button>
     </div>
   );
 };

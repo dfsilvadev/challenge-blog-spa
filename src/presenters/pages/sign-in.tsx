@@ -96,7 +96,7 @@ const SignIn = () => {
               <button
                 type="submit"
                 disabled={loading || isSubmitting}
-                className="w-full py-2 mt-4 font-semibold text-white bg-black rounded-lg hover:bg-gray-500 transition disabled:opacity-50 flex justify-center items-center"
+                className="cursor-pointer w-full py-2 mt-4 font-semibold text-white bg-black rounded-lg hover:bg-gray-500 transition disabled:opacity-50 flex justify-center items-center"
               >
                 {loading ? (
                   <>
