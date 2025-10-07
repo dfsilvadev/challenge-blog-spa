@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Routes } from '../../router/constants/routesMap';
 import { useAuth } from '../../../hooks/useAuth';
 import { useClickOutside } from '../../../hooks/useClickOutside'; // ✅ import do hook
+import { Routes } from '../../router/constants/routesMap';
 
 interface User {
   id: string;
@@ -84,6 +84,17 @@ const Header: React.FC = () => {
 
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-32 bg-white text-black rounded-md shadow-lg py-1">
+            {isLoggedIn && (
+              <button
+                onClick={() => {
+                  navigate(Routes.DASHBOARD_CREATE_POST);
+                  setDropdownOpen(false);
+                }}
+                className="cursor-pointer w-full text-left px-4 py-2 hover:bg-gray-100"
+              >
+                Novo Post
+              </button>
+            )}
             <button
               onClick={handleAuthClick}
               className="cursor-pointer w-full text-left px-4 py-2 hover:bg-gray-100 "

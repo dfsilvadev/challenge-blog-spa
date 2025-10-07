@@ -11,7 +11,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check-env": "node check-env.js"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

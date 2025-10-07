@@ -39,6 +39,7 @@ export interface CreatePost {
 }
 
 export interface UpdatePost {
+  id: string;
   title: string;
   content: string;
   is_active: boolean;

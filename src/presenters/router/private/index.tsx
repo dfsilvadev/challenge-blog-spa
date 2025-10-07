@@ -1,12 +1,12 @@
 import { Navigate, Outlet, useLocation } from 'react-router';
-
+import { useAuth } from '../../../hooks/useAuth';
 import { Routes } from '../constants/routesMap';
 
 const PrivateRoutes = () => {
   const location = useLocation();
-  const isAuthenticated = true;
+  const { isLoggedIn } = useAuth();
 
-  return isAuthenticated ? (
+  return isLoggedIn ? (
     <Outlet />
   ) : (
     <Navigate to={Routes.SIGN_IN} state={{ from: location }} replace />

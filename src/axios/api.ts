@@ -1,9 +1,9 @@
-import axios from 'axios';
 import type {
-  AxiosResponse,
   AxiosError,
+  AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
+import axios from 'axios';
 
 export interface ApiResponse<T> {
   data: T;
