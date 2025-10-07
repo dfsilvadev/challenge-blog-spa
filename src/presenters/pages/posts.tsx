@@ -1,3 +1,4 @@
+import { MagnifyingGlass } from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getErrorMessage } from '../../axios/api';
@@ -170,42 +171,60 @@ const Posts = () => {
 
   return (
     <div className="p-12">
-      <h1 className="font-bold text-5xl text-black">
-        {user ? 'Meus Posts' : 'Todos os Posts'}
-      </h1>
+      <div className="mx-auto max-w-[1200px] px-4">
+        <h1 className="font-bold text-5xl text-black">
+          {user ? 'Meus Posts' : 'Todos os Posts'}
+        </h1>
 
-      <PostsHeader
-        search={search}
-        setSearch={setSearch}
-        onSearch={(term?: string) => fetchPosts(1, term ?? search)}
-        orderBy={orderBy}
-        setOrderBy={setOrderBy}
-        isLandscape={isLandscape}
-        setIsLandscape={setIsLandscape}
-        onFilterSelect={category => setSelectedCategory(category)}
-        isLoggedIn={isLoggedIn}
-        onCreatePost={() => navigate(Routes.DASHBOARD_CREATE_POST)}
-      />
+        <PostsHeader
+          search={search}
+          setSearch={setSearch}
+          onSearch={(term?: string) => fetchPosts(1, term ?? search)}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          isLandscape={isLandscape}
+          setIsLandscape={setIsLandscape}
+          onFilterSelect={category => setSelectedCategory(category)}
+          isLoggedIn={isLoggedIn}
+          onCreatePost={() => navigate(Routes.DASHBOARD_CREATE_POST)}
+        />
+      </div>
 
       {loading ? (
         <p>Carregando...</p>
       ) : posts.length === 0 ? (
-        <div className="flex justify-center items-center py-20">
-          <div className="text-center text-gray-600">
-            <p className="text-xl font-semibold">Nenhum post encontrado</p>
-            <p className="text-sm mt-2">
-              Tente ajustar os filtros ou criar um novo post.
-            </p>
+        <div className="py-20">
+          <div className="mx-auto max-w-[1200px] px-4">
+            <div className="flex flex-col items-center justify-center text-center rounded-2xl border border-dashed border-gray-300 bg-white/60 p-10">
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 text-gray-500">
+                <MagnifyingGlass size={28} weight="bold" />
+              </div>
+              <h3 className="mt-4 text-2xl font-semibold text-gray-800">
+                Nenhum post encontrado
+              </h3>
+              <p className="mt-2 text-gray-500 text-sm">
+                Tente ajustar os filtros ou digite outro termo na busca.
+              </p>
+            </div>
           </div>
         </div>
       ) : (
         <>
           {/* Informação de quantidade */}
-          {filteredPosts.length > 0 && effectivePagination && (
-            <p className="flex justify-center text-gray-600 mt-4 text-lg">
-              Mostrando {posts.length} de {effectivePagination.total} posts
-            </p>
-          )}
+          {filteredPosts.length > 0 &&
+            effectivePagination &&
+            (() => {
+              const total = effectivePagination.total;
+              const start = (currentPage - 1) * registersPerPage + 1;
+              const end = Math.min(currentPage * registersPerPage, total);
+              return (
+                <div className="mx-auto max-w-[1200px] px-4">
+                  <p className="flex justify-center text-gray-600 mt-4 text-lg font-bold">
+                    Mostrando {start} à {end} de {total} posts
+                  </p>
+                </div>
+              );
+            })()}
           <PostsGrid
             posts={posts}
             isLandscape={isLandscape}
@@ -215,11 +234,13 @@ const Posts = () => {
             const pag = effectivePagination;
             if (!pag) return null;
             return (
-              <PostsPagination
-                pagination={pag}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-              />
+              <div className="mx-auto max-w-[1200px] px-4">
+                <PostsPagination
+                  pagination={pag}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
+              </div>
             );
           })()}
         </>

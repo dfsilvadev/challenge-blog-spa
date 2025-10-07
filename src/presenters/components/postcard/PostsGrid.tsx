@@ -1,6 +1,6 @@
-import PostCard from '../postcard/PostCard';
 import { getColorFromCategory } from '../../../utils/colorCategory';
 import type { Detail } from '../../components/ui/posts';
+import PostCard from '../postcard/PostCard';
 
 interface PostsGridProps {
   posts: Detail[];
@@ -13,10 +13,10 @@ export const PostsGrid = ({ posts, isLandscape, onDelete }: PostsGridProps) => {
 
   return (
     <div
-      className={`mt-12 gap-10 xl:gap-2 ${
+      className={`mt-12 mx-auto max-w-[1200px] px-4 ${
         isLandscape
-          ? 'grid'
-          : 'grid grid-cols-[repeat(auto-fill,minmax(150px,auto))] lg:grid-cols-[repeat(auto-fill,minmax(200px,auto))] 2xl:grid-cols-[repeat(auto-fill,minmax(400px,auto))]'
+          ? 'grid gap-6'
+          : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
       }`}
     >
       {posts.map(post => (
@@ -29,7 +29,7 @@ export const PostsGrid = ({ posts, isLandscape, onDelete }: PostsGridProps) => {
           createDate={post.created_at}
           category={getColorFromCategory(post.category_name)}
           isLandscape={isLandscape}
-          onDelete={() => onDelete(post.id)}
+          onDelete={onDelete}
         />
       ))}
     </div>
