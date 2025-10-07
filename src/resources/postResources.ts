@@ -50,7 +50,7 @@ export const create = (postData: CreatePost) =>
   post<PostResponse, CreatePost>(base, postData, true);
 
 export const update = (postData: UpdatePost) =>
-  patch<PostResponse, UpdatePost>(base, postData, true);
+  patch<PostResponse, UpdatePost>(base + `/${postData.id}`, postData, true);
 
 export const remove = (postId: string) =>
   del<PostResponse>(base + `/${postId}`, true);
