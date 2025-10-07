@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import { DotsThreeVertical } from 'phosphor-react';
-import { Routes } from '../../router/constants/routesMap';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { useAuth } from '../../../hooks/useAuth';
 import { useClickOutside } from '../../../hooks/useClickOutside';
+import { Routes } from '../../router/constants/routesMap';
 
 interface CardProps {
   postId: string;
@@ -13,7 +13,7 @@ interface CardProps {
   createDate: string;
   category: string;
   isLandscape?: boolean;
-  onDelete: () => void;
+  onDelete: (id: string) => void;
 }
 
 const PostCard: React.FC<CardProps> = ({
@@ -99,7 +99,7 @@ const PostCard: React.FC<CardProps> = ({
               e.stopPropagation();
               setIsDialogOpen(prev => !prev);
             }}
-            className="cursor-pointer absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 z-50"
+            className="cursor-pointer absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 z-50 bg-white/70 backdrop-blur-sm"
             aria-label="Abrir menu de opções"
           >
             <DotsThreeVertical size={24} className="text-black" weight="bold" />
@@ -124,7 +124,7 @@ const PostCard: React.FC<CardProps> = ({
             </button>
             <button
               onClick={() => {
-                onDelete();
+                onDelete(postId);
                 setIsDialogOpen(false);
               }}
               className="px-4 py-2 text-center hover:bg-gray-100 text-red-600"
@@ -136,7 +136,7 @@ const PostCard: React.FC<CardProps> = ({
 
         {/* Conteúdo do card */}
         <div className="px-6 py-4 flex-1 flex flex-col">
-          <div className="text-left font-bold text-2xl text-black mb-2 capitalize">
+          <div className="text-left font-bold text-2xl text-black mb-2 capitalize pr-10 line-clamp-2">
             {title}
           </div>
           <p className="text-gray-700 pt-3 text-base capitalize line-clamp-8 text-justify">
@@ -156,4 +156,4 @@ const PostCard: React.FC<CardProps> = ({
   );
 };
 
-export default PostCard;
+export default React.memo(PostCard);

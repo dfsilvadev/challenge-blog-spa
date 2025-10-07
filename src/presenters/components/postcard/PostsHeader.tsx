@@ -93,7 +93,7 @@ export const PostsHeader = ({
                 if (search.trim()) onSearch(search.trim());
               }
             }}
-            className="p-2 pl-10 rounded-[10px] w-full h-[40px] bg-white border border-[#DFDFDF] focus:outline-none focus:border-red-500 placeholder-gray-400 text-black"
+            className="p-2 pl-10 rounded-[10px] w-full h-[40px] bg-white border border-[#DFDFDF] focus:outline-none focus:border-blue-500 placeholder-gray-400 text-black"
           />
         </div>
 
