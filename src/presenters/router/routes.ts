@@ -24,6 +24,10 @@ export default [
         Routes.DASHBOARD_EDIT_POST.replace('/', ''),
         '../pages/post-edit.tsx'
       ),
+      route(
+        Routes.DASHBOARD_CREATE_POST.replace('/', ''),
+        '../pages/post-create.tsx'
+      ),
     ]),
 
     // NotFound

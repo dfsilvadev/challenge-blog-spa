@@ -8,6 +8,7 @@ import PrivateRoutes from './private';
 
 import Dashboard from '../pages/dashboard';
 import NotFound from '../pages/not-found';
+import PostCreate from '../pages/post-create.tsx';
 import PostDetails from '../pages/post-details';
 import PostEdit from '../pages/post-edit';
 import Posts from '../pages/posts';
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
           {
             path: RoutePaths.DASHBOARD_EDIT_POST.replace('/', ''),
             element: <PostEdit />,
+          },
+          {
+            path: RoutePaths.DASHBOARD_CREATE_POST.replace('/', ''),
+            element: <PostCreate />,
           },
         ],
       },

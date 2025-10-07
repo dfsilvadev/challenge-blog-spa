@@ -29,6 +29,10 @@ O projeto inclui um tema personalizado com as seguintes cores:
 # Instalar dependências
 npm install
 
+# Configurar variáveis de ambiente
+cp .env.example .env
+# Edite o arquivo .env com a URL da sua API
+
 # Executar em modo de desenvolvimento
 npm run dev
 
@@ -37,6 +41,29 @@ npm run build
 
 # Preview do build
 npm run preview
+```
+
+## ⚙️ Variáveis de Ambiente
+
+O projeto requer as seguintes variáveis de ambiente configuradas no arquivo `.env`:
+
+| Variável           | Descrição                    | Exemplo                 |
+| ------------------ | ---------------------------- | ----------------------- |
+| `VITE_API_URL`     | URL base da API backend      | `http://localhost:3000` |
+| `VITE_API_TIMEOUT` | Timeout das requisições (ms) | `10000`                 |
+
+**Importante:** Após criar ou modificar o arquivo `.env`, você **deve reiniciar o servidor de desenvolvimento** para que o Vite carregue as novas variáveis.
+
+```bash
+# Copie o arquivo de exemplo
+cp .env.example .env
+
+# Edite com suas configurações
+nano .env
+
+# Reinicie o servidor
+# Pressione Ctrl+C e execute novamente:
+npm run dev
 ```
 
 ## 🛠️ Scripts Disponíveis

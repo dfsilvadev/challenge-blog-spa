@@ -1,7 +1,7 @@
-import { get, del, patch, post } from '../axios/api';
+import { del, get, patch, post } from '../axios/api';
 import type {
-  PostResponse,
   CreatePost,
+  PostResponse,
   UpdatePost,
 } from '../presenters/components/ui/posts';
 
@@ -9,11 +9,29 @@ const base = '/post';
 
 export const getall = () => get<PostResponse>(base, true);
 
+export const getPaged = (
+  page: number,
+  limit: number = 10,
+  orderBy: string = 'ASC'
+) => get<PostResponse>(base, true, { page, limit, orderBy });
+
 export const getPostById = (id: string) =>
   get<PostResponse>(base + `/${id}`, false);
 
 export const getPostByUser = (userId: string) =>
   get<PostResponse>(base + `/createdBy/${userId}`, true);
+
+export const getPostByUserPaged = (
+  userId: string,
+  page: number,
+  limit: number = 10,
+  orderBy: string = 'ASC'
+) =>
+  get<PostResponse>(base + `/createdBy/${userId}`, true, {
+    page,
+    limit,
+    orderBy,
+  });
 
 export const getPostFilter = (
   search: string,

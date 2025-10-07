@@ -1,14 +1,14 @@
-import { useRef, useState, useEffect } from 'react';
-import { Funnel, SquaresFour, ListBullets } from 'phosphor-react';
+import { Funnel, ListBullets, SquaresFour } from 'phosphor-react';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useClickOutside } from '../../../hooks/useClickOutside';
 import { getColorFromCategory } from '../../../utils/colorCategory';
 import { subjects } from '../ui/subjects';
-import { useTranslation } from 'react-i18next';
 
 interface PostsHeaderProps {
   search: string;
   setSearch: (value: string) => void;
-  onSearch: () => void;
+  onSearch: (term?: string) => void;
   orderBy: 'ASC' | 'DESC';
   setOrderBy: (value: 'ASC' | 'DESC') => void;
   isLandscape: boolean;
@@ -38,9 +38,12 @@ export const PostsHeader = ({
   useClickOutside(filterRef, () => setFilterOpen(false));
 
   useEffect(() => {
-    const handler = setTimeout(() => onSearch(), 1000);
+    const term = search?.trim?.() ?? '';
+    if (!term) return;
+    const handler = setTimeout(() => onSearch(term), 1000);
     return () => clearTimeout(handler);
-  }, [search, onSearch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
 
   const handleCategoryClick = (category: string) => {
     if (selectedCategory === category) {
@@ -77,7 +80,19 @@ export const PostsHeader = ({
             type="text"
             placeholder="Digite aqui..."
             value={search}
-            onChange={e => setSearch(e.target.value)}
+            onChange={e => {
+              const val = e.target.value;
+              setSearch(val);
+              if (val.trim() === '') {
+                onSearch('');
+              }
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                if (search.trim()) onSearch(search.trim());
+              }
+            }}
             className="p-2 pl-10 rounded-[10px] w-full h-[40px] bg-white border border-[#DFDFDF] focus:outline-none focus:border-red-500 placeholder-gray-400 text-black"
           />
         </div>
