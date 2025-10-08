@@ -47,14 +47,13 @@ const PostCard: React.FC<CardProps> = ({
   }, []);
 
   const getBackgroundWidth = () => {
-    if (!isLandscape) return '40%';
-    if (cardWidth <= 0) return '40%';
+    if (!isLandscape) return '120px'; // Largura fixa em pixels para evitar estiramento
+    if (cardWidth <= 0) return '80px';
 
-    const minPercent = 0.1;
-    const maxPercent = 0.3;
-    const percent =
-      maxPercent - (cardWidth / window.innerWidth) * (maxPercent - minPercent);
-    return `${Math.max(minPercent, Math.min(maxPercent, percent)) * 100}%`;
+    // Largura fixa baseada no tamanho do card, mas limitada
+    const maxWidth = Math.min(cardWidth * 0.4, 200); // Máximo 200px
+    const minWidth = 60; // Mínimo 60px
+    return `${Math.max(minWidth, Math.min(maxWidth, 150))}px`;
   };
 
   const handleCardClick = (e: React.MouseEvent) => {
@@ -70,7 +69,10 @@ const PostCard: React.FC<CardProps> = ({
   };
 
   return (
-    <div ref={cardRef} className="relative mx-auto mt-5">
+    <div
+      ref={cardRef}
+      className={`relative mt-5 ${isLandscape ? 'w-full' : 'mx-auto'}`}
+    >
       {/* Div de fundo menor (decorativa e responsiva) */}
       <div
         className={`absolute top-0 -mt-5 h-40 rounded-lg ${category || 'bg-blue-500'}`}
@@ -85,12 +87,14 @@ const PostCard: React.FC<CardProps> = ({
       <button
         onClick={handleCardClick}
         className={`bg-white rounded-lg border border-[#DFDFDF] overflow-hidden cursor-pointer transition-transform hover:scale-[1.01]
-        flex flex-col justify-between relative
-        ${
-          isLandscape
-            ? 'w-[80vw] h-[200px] mx-auto'
-            : 'w-[42vw] md:w-[22vw] xl:w-[15vw] h-[200px] xl:h-[300px]'
-        }`}
+        flex flex-col justify-between relative w-full
+        ${isLandscape ? 'h-[200px]' : 'h-[280px]'}`}
+        style={{
+          height: isLandscape ? '200px' : '280px',
+          minHeight: isLandscape ? '200px' : '280px',
+          maxHeight: isLandscape ? '200px' : '280px',
+          flexShrink: 0,
+        }}
       >
         {/* Ícone de menu no canto superior direito */}
         {isLoggedIn && (

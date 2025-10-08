@@ -13,10 +13,10 @@ export const PostsGrid = ({ posts, isLandscape, onDelete }: PostsGridProps) => {
 
   return (
     <div
-      className={`mt-12 mx-auto max-w-[1200px] px-4 ${
+      className={`mt-12 mx-auto max-w-[1800px] px-4 ${
         isLandscape
-          ? 'grid gap-6'
-          : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+          ? 'flex flex-col gap-6'
+          : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 4xl:grid-cols-7 gap-6'
       }`}
     >
       {posts.map(post => (

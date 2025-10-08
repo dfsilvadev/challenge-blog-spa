@@ -9,6 +9,10 @@ export default defineConfig({
         heading: '#464646',
         text: '#9B9B9B',
       },
+      screens: {
+        '3xl': '1920px',
+        '4xl': '2560px',
+      },
     },
   },
 });
