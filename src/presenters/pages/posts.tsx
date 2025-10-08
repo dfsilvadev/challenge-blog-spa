@@ -192,7 +192,7 @@ const Posts = () => {
 
       {loading ? (
         <p>Carregando...</p>
-      ) : posts.length === 0 ? (
+      ) : filteredPosts.length === 0 ? (
         <div className="py-20">
           <div className="mx-auto max-w-[1200px] px-4">
             <div className="flex flex-col items-center justify-center text-center rounded-2xl border border-dashed border-gray-300 bg-white/60 p-10">
@@ -214,8 +214,11 @@ const Posts = () => {
           {filteredPosts.length > 0 &&
             effectivePagination &&
             (() => {
-              const total = effectivePagination.total;
-              const start = (currentPage - 1) * registersPerPage + 1;
+              const total = filteredPosts.length;
+              const start = Math.min(
+                (currentPage - 1) * registersPerPage + 1,
+                total
+              );
               const end = Math.min(currentPage * registersPerPage, total);
               return (
                 <div className="mx-auto max-w-[1200px] px-4">
@@ -226,7 +229,7 @@ const Posts = () => {
               );
             })()}
           <PostsGrid
-            posts={posts}
+            posts={filteredPosts}
             isLandscape={isLandscape}
             onDelete={handleDelete}
           />

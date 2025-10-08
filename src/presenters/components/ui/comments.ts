@@ -13,7 +13,6 @@ export interface CommentDetail {
 }
 
 export interface CreateComment {
-  author: string;
   content: string;
-  post_id: string;
+  author: string;
 }

@@ -1,3 +1,4 @@
+import { ArrowLeft, NotePencil } from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useAuth } from '../../hooks/useAuth';
@@ -77,32 +78,60 @@ const PostEdit = () => {
 
   if (!initial)
     return (
-      <div className="min-h-screen">
-        <main className="max-w-[90%] md:max-w-[80%] text-black mx-auto px-4 py-8">
-          <p>Carregando...</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <main className="max-w-4xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-64">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+              <p className="text-gray-600 text-lg">
+                Carregando dados do post...
+              </p>
+            </div>
+          </div>
         </main>
       </div>
     );
 
   return (
-    <div className="min-h-screen">
-      <main className="max-w-[90%] md:max-w-[80%] text-black mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <main className="max-w-4xl mx-auto px-4 py-8">
+        {/* Breadcrumb */}
         <button
           onClick={() => navigate(Routes.POSTS)}
-          className="cursor-pointer text-blue-600 text-base"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-8 transition-colors group"
         >
-          Home
+          <ArrowLeft
+            size={20}
+            weight="bold"
+            className="group-hover:-translate-x-1 transition-transform"
+          />
+          Voltar para Home
         </button>
-        <span>/Post</span>
 
-        <h1 className="text-4xl md:text-5xl font-bold mt-6">Edite seu post</h1>
+        {/* Header Card */}
+        <div className="bg-white rounded-2xl shadow-sm p-8 mb-8 border border-gray-100 hover:shadow-md transition-shadow duration-300">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-lg">
+              <NotePencil size={28} weight="bold" className="text-white" />
+            </div>
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                Editar Post
+              </h1>
+              <p className="text-gray-600 mt-1">
+                Atualize seu conteúdo e mantenha-o sempre relevante
+              </p>
+            </div>
+          </div>
+        </div>
 
-        <div className="mt-8">
+        {/* Form Card */}
+        <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100 hover:shadow-md transition-shadow duration-300">
           <PostForm
             initialValues={initial}
             categories={categories}
             loadingCategories={loading}
-            submitLabel="Salvar"
+            submitLabel="Salvar Alterações"
             onSubmit={handleSubmit}
           />
         </div>
